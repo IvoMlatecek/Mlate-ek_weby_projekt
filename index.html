@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="FreeGamesIndex – databáze free-to-play her." />
+  <meta name="theme-color" content="#0c0e0f" />
+  <title>FreeGamesIndex</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=IBM+Plex+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="hlavicka">
+    <div class="hlavicka-vnitrni">
+      <a href="#" class="logo" id="logo-domu">FreeGamesIndex</a>
+      <nav class="navigace">
+        <button class="nav-tlacitko aktivni" id="nav-prohlizeni">PROCHÁZET</button>
+        <button class="nav-tlacitko" id="nav-oblibene">
+          OBLÍBENÉ<span class="pocet-oblibenych" id="pocet-oblibenych"></span>
+        </button>
+      </nav>
+      <div class="hlavicka-akce">
+        <button class="tlacitko-ikona" id="prepinac-hledani" aria-label="Hledat">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+        <button class="tlacitko-prihlaseni" id="tlacitko-auth">PŘIHLÁSIT</button>
+      </div>
+    </div>
+    <div class="panel-hledani" id="panel-hledani" hidden>
+      <input type="search" id="vstup-hledani" placeholder="Hledat hry, vývojáře…" autocomplete="off" />
+    </div>
+  </header>
+
+  <div class="prekryti-modalu" id="modal-prihlaseni">
+    <div class="telo-modalu" role="dialog" aria-modal="true" aria-labelledby="nadpis-modalu">
+      <button class="zavrit-modal" id="zavrit-modal" aria-label="Zavřít">✕</button>
+      <h2 class="nadpis-modalu" id="nadpis-modalu">PŘIHLÁŠENÍ</h2>
+      <p class="podnadpis-modalu" id="podnadpis-modalu">Přihlas se svým účtem</p>
+      <div class="formular-modalu">
+        <input type="text" id="vstup-jmeno" placeholder="Uživatelské jméno" autocomplete="username" style="display:none" />
+        <input type="email" id="vstup-email" placeholder="E-mail" autocomplete="email" />
+        <input type="password" id="vstup-heslo" placeholder="Heslo" autocomplete="current-password" />
+        <button class="tlacitko-hlavni" id="odeslat-prihlaseni">PŘIHLÁSIT SE</button>
+      </div>
+      <p class="prepnout-modal">Nemáš účet? <button class="odkaz-tlacitko" id="prepnout-registraci">Zaregistruj se</button></p>
+      <p class="chyba-modalu" id="chyba-modalu" hidden></p>
+    </div>
+  </div>
+
+  <main class="hlavni-obsah">
+
+    <section class="pohled" id="pohled-prohlizeni">
+      <div class="lista-filtru">
+        <div class="skupina-filtru">
+          <label for="filtr-platforma">PLATFORMA</label>
+          <select id="filtr-platforma">
+            <option value="">VŠE</option>
+            <option value="pc">PC</option>
+            <option value="browser">PROHLÍŽEČ</option>
+          </select>
+        </div>
+        <div class="skupina-filtru">
+          <label for="filtr-zanr">ŽÁNR</label>
+          <select id="filtr-zanr">
+            <option value="">VŠE</option>
+            <option value="mmorpg">MMORPG</option>
+            <option value="mmo">MMO</option>
+            <option value="mmofps">MMOFPS</option>
+            <option value="mmotps">MMOTPS</option>
+            <option value="mmorts">MMORTS</option>
+            <option value="moba">MOBA</option>
+            <option value="shooter">SHOOTER</option>
+            <option value="action">AKČNÍ</option>
+            <option value="action-rpg">AKČNÍ RPG</option>
+            <option value="fighting">BOJOVÁ</option>
+            <option value="martial-arts">BOJOVÁ UMĚNÍ</option>
+            <option value="battle-royale">BATTLE ROYALE</option>
+            <option value="strategy">STRATEGIE</option>
+            <option value="tower-defense">TOWER DEFENSE</option>
+            <option value="turn-based">TAHOVÁ</option>
+            <option value="card">KARETNÍ</option>
+            <option value="fantasy">FANTASY</option>
+            <option value="sci-fi">SCI-FI</option>
+            <option value="anime">ANIME</option>
+            <option value="open-world">OTEVŘENÝ SVĚT</option>
+            <option value="sandbox">SANDBOX</option>
+            <option value="survival">SURVIVAL</option>
+            <option value="horror">HOROR</option>
+            <option value="zombie">ZOMBIE</option>
+            <option value="racing">ZÁVODNÍ</option>
+            <option value="sports">SPORTOVNÍ</option>
+            <option value="social">SOCIÁLNÍ</option>
+            <option value="pvp">PVP</option>
+            <option value="pve">PVE</option>
+            <option value="first-person">PRVNÍ OSOBA</option>
+            <option value="third-Person">TŘETÍ OSOBA</option>
+            <option value="top-down">TOP-DOWN</option>
+            <option value="side-scroller">PLOŠINOVKA</option>
+            <option value="2d">2D</option>
+            <option value="3d">3D</option>
+            <option value="pixel">PIXEL</option>
+            <option value="voxel">VOXEL</option>
+            <option value="low-spec">LOW-SPEC</option>
+            <option value="space">VESMÍR</option>
+            <option value="sailing">NÁMOŘNÍ</option>
+            <option value="flight">LETECKÁ</option>
+            <option value="tank">TANKOVÁ</option>
+            <option value="military">VOJENSKÁ</option>
+            <option value="superhero">SUPERHRDINSKÁ</option>
+            <option value="permadeath">PERMADEATH</option>
+          </select>
+        </div>
+        <div class="skupina-filtru skupina-razeni">
+          <label for="filtr-razeni">SEŘADIT</label>
+          <select id="filtr-razeni">
+            <option value="relevance">RELEVANCE</option>
+            <option value="datum-vydani">DATUM VYDÁNÍ</option>
+            <option value="popularita">POPULARITA</option>
+            <option value="abecedne">A–Z</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="stav-nacitani" id="stav-nacitani">
+        <div class="kruznice-nacitani"></div>
+        <p>Načítám hry…</p>
+      </div>
+      <div class="stav-chyby" id="stav-chyby" hidden>
+        <p>⚠ Hry se nepodařilo načíst. <button id="tlacitko-znovu" class="odkaz-tlacitko">Zkusit znovu</button></p>
+      </div>
+
+      <div class="mrizka-her" id="mrizka-her" hidden></div>
+
+      <div class="zadne-vysledky" id="zadne-vysledky" hidden>
+        <p>Žádné hry neodpovídají filtrům.</p>
+      </div>
+    </section>
+
+    <section class="pohled" id="pohled-oblibene" hidden>
+      <h2 class="nadpis-sekce">OBLÍBENÉ HRY</h2>
+      <div class="mrizka-her" id="mrizka-oblibenych"></div>
+      <div class="zadne-vysledky" id="zadne-oblibene" hidden>
+        <p>Zatím žádné oblíbené. Procházej hry a klikni na ♡ pro uložení.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <aside class="panel-detailu" id="panel-detailu" hidden>
+    <div class="panel-detailu-vnitrni">
+      <button class="zavrit-panel" id="zavrit-panel" aria-label="Zavřít">✕ ZAVŘÍT</button>
+      <div class="detail-obrazek" id="detail-obrazek"></div>
+      <div class="detail-telo" id="detail-telo"></div>
+
+      <div class="sekce-komentaru" id="sekce-komentaru" hidden>
+        <h3 class="nadpis-komentaru">KOMENTÁŘE</h3>
+        <div class="seznam-komentaru" id="seznam-komentaru"></div>
+        <div class="formular-komentare">
+          <div class="vstup-hodnoceni" id="vstup-hodnoceni">
+            <span>HODNOCENÍ:</span>
+            <div class="hvezdicky" id="hvezdicky-hodnoceni">
+              <button class="hvezdicka" data-val="1">★</button>
+              <button class="hvezdicka" data-val="2">★</button>
+              <button class="hvezdicka" data-val="3">★</button>
+              <button class="hvezdicka" data-val="4">★</button>
+              <button class="hvezdicka" data-val="5">★</button>
+              <button class="hvezdicka" data-val="6">★</button>
+              <button class="hvezdicka" data-val="7">★</button>
+              <button class="hvezdicka" data-val="8">★</button>
+              <button class="hvezdicka" data-val="9">★</button>
+              <button class="hvezdicka" data-val="10">★</button>
+            </div>
+            <span id="hodnota-hodnoceni">–</span>
+          </div>
+          <textarea id="text-komentare" placeholder="Napiš komentář…" rows="3" maxlength="300"></textarea>
+          <button class="tlacitko-hlavni" id="odeslat-komentar">PŘIDAT KOMENTÁŘ</button>
+        </div>
+      </div>
+
+      <div class="vyzva-prihlaseni" id="vyzva-prihlaseni">
+        <p>— <button class="odkaz-tlacitko" id="tlacitko-vyzva-prihlaseni">Přihlas se</button> pro komentování a hodnocení —</p>
+      </div>
+    </div>
+  </aside>
+  <div class="prekryti-panelu" id="prekryti-panelu" hidden></div>
+
+  <div class="notifikace" id="notifikace" hidden></div>
+
+  <footer class="paticka">
+    <p>FreeGamesIndex · Data z <a href="https://www.freetogame.com" target="_blank" rel="noopener">FreeToGame API</a></p>
+  </footer>
+
+
+  <div class="prehravac" id="prehravac">
+    <div class="prehravac-stopa">
+      <span class="prehravac-znacka">♫</span>
+      <div class="prehravac-info">
+        <span class="prehravac-nazev" id="prehravac-nazev">Hazardous Environments</span>
+        <span class="prehravac-autor">Kelly Bailey — Half-Life OST</span>
+      </div>
+    </div>
+    <div class="prehravac-ovladani">
+      <button class="ovladani-btn" id="btn-prev" title="Předchozí">⏮</button>
+      <button class="ovladani-btn ovladani-play" id="btn-play" title="Přehrát">▶</button>
+      <button class="ovladani-btn" id="btn-next" title="Další">⏭</button>
+    </div>
+    <div class="prehravac-progress" id="prehravac-progress">
+      <div class="progress-bar" id="progress-bar"></div>
+    </div>
+    <div class="prehravac-cas" id="prehravac-cas">0:00</div>
+  </div>
+  <div id="yt-kontejner" style="position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;overflow:hidden;"></div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
