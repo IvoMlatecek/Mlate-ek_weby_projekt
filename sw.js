@@ -6,13 +6,12 @@
 const CACHE_NAME = 'fgt-v1';
 
 const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/style.css',
-  '/app.js',
-  '/manifest.json',
-  'https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;600;700&display=swap'
-];
+ './',
+  './index.html',
+  './style.css',
+  './app.js',
+  './manifest.json',
+  'https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;600;700&display=swap'];
 
 // Install: cache static assets
 self.addEventListener('install', (event) => {

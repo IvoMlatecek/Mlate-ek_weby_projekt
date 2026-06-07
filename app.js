@@ -820,15 +820,15 @@ function formatujDatum(iso) {
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js').catch(() => {});
+    navigator.serviceWorker.register('/web/sw.js', { scope: '/web/' }).catch(() => {});
   });
 }
 
 
 const PLAYLIST = [
-  { nazev: 'Hazardous Environments', vid: 'O4jY9Q7HGuo' },
-  { nazev: 'Klaxon Beat',            vid: 'iuFqwa5hVzY' },
-  { nazev: 'Credits Closing Theme',  vid: '9_UBS7_9kw4' },
+  { nazev: 'Hazardous Environments', vid: 'vO_8Jr_zssM', start: 729  },
+  { nazev: 'Klaxon Beat',            vid: 'vO_8Jr_zssM', start: 265  },
+  { nazev: 'Credits Closing Theme',  vid: 'vO_8Jr_zssM', start: 1973 },
 ];
 
 let ytPrehravac = null;
@@ -854,6 +854,7 @@ window.onYouTubeIframeAPIReady = function() {
     height: '1',
     width: '1',
     videoId: PLAYLIST[aktualniStopa].vid,
+    startSeconds: PLAYLIST[aktualniStopa].start || 0,
     playerVars: { autoplay: 0, controls: 0, disablekb: 1, fs: 0, modestbranding: 1 },
     events: {
       onStateChange: (e) => {
@@ -881,16 +882,19 @@ const ytScript = document.createElement('script');
 ytScript.src = 'https://www.youtube.com/iframe_api';
 document.head.appendChild(ytScript);
 
+const DELKY_STOP = [85, 60, 100]; // approximate seconds per track
+
 function spustProgress() {
   zastavProgress();
   progressInterval = setInterval(() => {
     if (!ytPrehravac) return;
-    const delka = ytPrehravac.getDuration();
-    const cas = ytPrehravac.getCurrentTime();
-    if (delka > 0) {
-      progressBar.style.width = (cas / delka * 100) + '%';
-      prehravacCas.textContent = formatujCas(cas);
-    }
+    const start = PLAYLIST[aktualniStopa].start || 0;
+    const casAbsolutni = ytPrehravac.getCurrentTime();
+    const casRelativni = Math.max(0, casAbsolutni - start);
+    const delka = DELKY_STOP[aktualniStopa] || 60;
+    progressBar.style.width = Math.min(100, casRelativni / delka * 100) + '%';
+    prehravacCas.textContent = formatujCas(casRelativni);
+    if (casRelativni >= delka) preskocStopa(1);
   }, 500);
 }
 
@@ -911,7 +915,7 @@ function nactiStopa(index, autoplay = false) {
   progressBar.style.width = '0%';
   prehravacCas.textContent = '0:00';
   if (ytPrehravac) {
-    ytPrehravac.loadVideoById(stopa.vid);
+    ytPrehravac.loadVideoById({ videoId: stopa.vid, startSeconds: stopa.start || 0 });
     if (!autoplay) ytPrehravac.pauseVideo();
   }
 }

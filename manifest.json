@@ -1,23 +1,23 @@
 {
-  "name": "FreeGame Tracker",
-  "short_name": "FGTracker",
-  "description": "Browse, filter and bookmark free-to-play games.",
-  "start_url": "/",
+  "name": "FreeGamesIndex",
+  "short_name": "FreeGamesIndex",
+  "description": "Databáze free-to-play her.",
+  "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#0d0d14",
-  "theme_color": "#0d0d14",
+  "background_color": "#0c0e0f",
+  "theme_color": "#0c0e0f",
   "icons": [
     {
-      "src": "icons/icon-192.png",
+      "src": "./icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
-      "src": "icons/icon-512.png",
+      "src": "./icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
   ]
 }
